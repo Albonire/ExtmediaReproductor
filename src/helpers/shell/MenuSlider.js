@@ -6,7 +6,7 @@ import * as Slider from "resource:///org/gnome/shell/ui/slider.js";
 import { msToHHMMSS } from "../../utils/common.js";
 
 /** @extends St.BoxLayout */
-class MenuSlider extends St.BoxLayout {
+class ExtmediaMenuSlider extends St.BoxLayout {
     /**
      * @private
      * @type {Clutter.PropertyTransition}
@@ -243,7 +243,7 @@ const GMenuSlider = GObject.registerClass(
             },
         },
     },
-    MenuSlider,
+    ExtmediaMenuSlider,
 );
 
 export default GMenuSlider;
