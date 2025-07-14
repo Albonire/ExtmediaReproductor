@@ -11,7 +11,7 @@ import { PanelElements } from "../../types/enums/common.js";
  * @typedef {Adw.ActionRow & { elementKey: string }} PanelElementRow
  */
 
-class ElementList extends Adw.PreferencesGroup {
+class ExtmediaElementList extends Adw.PreferencesGroup {
     /**
      * @public
      * @type {string[]}
@@ -152,4 +152,4 @@ class ElementList extends Adw.PreferencesGroup {
     }
 }
 
-export default ElementList;
+export default ExtmediaElementList;
