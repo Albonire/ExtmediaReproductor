@@ -48,7 +48,7 @@ function find_child_by_name(parent, name) {
 }
 
 /** @extends PanelMenu.Button */
-class PanelButton extends PanelMenu.Button {
+class ExtmediaPanelButton extends PanelMenu.Button {
     /**
      * @private
      * @type {PlayerProxy}
@@ -1094,7 +1094,7 @@ const GPanelButton = GObject.registerClass(
         GTypeName: "PanelButton",
         Properties: {},
     },
-    PanelButton,
+    ExtmediaPanelButton,
 );
 
 export default GPanelButton;
