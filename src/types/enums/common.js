@@ -1,4 +1,5 @@
 /** @import { Enum } from '../misc.js' */
+// ExtmediaReproductor common enumerations
 
 export const DBUS_IFACE_NAME = "org.freedesktop.DBus";
 export const MPRIS_OBJECT_PATH = "/org/mpris/MediaPlayer2";
