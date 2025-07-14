@@ -1,81 +1,67 @@
-## What does this extension do?
+# ExtmediaReproductor
 
-Show controls and information of the currently playing media in the panel.
+ExtmediaReproductor es una extensión para GNOME Shell que muestra controles e información del medio actualmente en reproducción directamente en el panel.
 
-## Features
+## Características
 
-- Customize the extension the way you want it
-- Basic media controls (play/pause/next/previous/loop/shuffle/seek)
-- Mouse actions lets you run different actions via left/middle/right/scroll.
-- Popup with album art and a slider to control the playback
-- Scrolling animations
-- Blacklist players
-
----
-
-## How to install
-
-#### Install from extensions.gnome.org (Recommended)
-
-[<img src="assets/images/ego.png" height="100">](https://extensions.gnome.org/extension/4470/media-controls/)
-
-#### Manual installation
-
-Install from source
-
-- Download archive file from the releases tab
-- Open a terminal in the directory containing the downloaded file
-- Install and enable the extension by executing `gnome-extensions install extension.zip --force` in the terminal
+- Personalización completa de la extensión
+- Controles básicos de reproducción (play/pausa/siguiente/anterior/repetir/aleatorio/desplazamiento)
+- Acciones de ratón configurables (clic izquierdo/medio/derecho/rueda)
+- Ventana emergente con carátula y barra de progreso
+- Animaciones de desplazamiento
+- Lista negra de reproductores
 
 ---
 
-## Reporting issues
+## Instalación
 
-- Make sure your issue isn't a duplicate
-- Include the following information when creating the issue,
-    - Extension version
-    - Gnome version
-    - Your distribution
-    - A screenshot if it is possible
+### Instalación manual
+
+1. Descarga el archivo comprimido desde la sección de releases.
+2. Abre una terminal en el directorio donde descargaste el archivo.
+3. Instala y habilita la extensión ejecutando:
+   ```
+   gnome-extensions install extension.zip --force
+   ```
 
 ---
 
-## Get involved
+## Reporte de problemas
 
-Any type of contribution is appreciated! If you have any suggestions for new features feel free to open a new issue.
+- Verifica que tu problema no haya sido reportado antes.
+- Incluye la siguiente información al crear un issue:
+  - Versión de la extensión
+  - Versión de GNOME
+  - Distribución utilizada
+  - Captura de pantalla si es posible
 
-If you are interested in translating, download the [po file](https://github.com/sakithb/media-controls/blob/main/assets/locale/mediacontrols%40cliffniff.github.com.pot) and translate it. Then open a pull request with the translated file. You can use [Gtranslator](https://flathub.org/apps/org.gnome.Gtranslator) or [Poedit](https://flathub.org/apps/net.poedit.Poedit) to translate.
+---
 
-If you are interested in contributing code. There are no specific guidelines for contributing. Just make sure you follow the coding style of the project. To update the translation files run `./mediacontrols.sh translations` in the extensions directory after your changes are done. This will update the files in the locale folder.
+## Contribuir
 
-<a href="https://github.com/sakithb/media-controls/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=sakithb/media-controls" />
-</a>
+¡Cualquier tipo de contribución es bienvenida! Si tienes sugerencias para nuevas funciones, abre un issue.
 
-Made with [contrib.rocks](https://contrib.rocks).
+Si quieres traducir la extensión, descarga el archivo .po correspondiente y envía un pull request con la traducción.
 
-## Screenshots
+Si deseas contribuir con código, sigue el estilo del proyecto. Para actualizar los archivos de traducción ejecuta:
 
-#### Popup menu
+```
+./mediacontrols.sh translations
+```
 
-[<img src="assets/images/popup.png" width="400">]()
+después de tus cambios.
 
-#### General settings
+---
 
-[<img src="assets/images/prefs_general.png" width="400">]()
+## Capturas de pantalla
 
-#### Panel settings
+- Menú emergente
+- Configuración general
+- Configuración del panel
+- Configuración de posiciones
+- Configuración de atajos
+- Otras configuraciones
 
-[<img src="assets/images/prefs_panel.png" width="400">]()
+---
 
-#### Position settings
-
-[<img src="assets/images/prefs_positions.png" width="400">]()
-
-#### Shortcut settings
-
-[<img src="assets/images/prefs_shortcuts.png" width="400">]()
-
-#### Other settings
-
-[<img src="assets/images/prefs_other.png" width="400">]()
+Proyecto desarrollado y mantenido por [Tu Nombre o Alias].
