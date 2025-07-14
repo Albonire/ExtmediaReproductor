@@ -1,5 +1,6 @@
 import Gdk from "gi://Gdk";
 import Gtk from "gi://Gtk";
+// ExtmediaReproductor preferences utilities
 
 export const FORBIDDEN_KEYVALS = [
     Gdk.KEY_Home,
