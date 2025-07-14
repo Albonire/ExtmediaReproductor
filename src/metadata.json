@@ -3,8 +3,8 @@
   "name": "ExtmediaReproductor",
   "description": "Muestra controles e información del medio actualmente en reproducción en el panel.",
   "url": "https://github.com/Albonire/ExtmediaReproductor",
-  "settings-schema": "org.gnome.shell.extensions.mediacontrols",
-  "gettext-domain": "mediacontrols@cliffniff.github.com",
+  "settings-schema": "org.gnome.shell.extensions.extmediareproductor",
+  "gettext-domain": "extmediareproductor@albonire.github.com",
   "version-name": "2.2.0",
   "shell-version": ["48"]
 }
