@@ -1,4 +1,4 @@
-// Utils only used in the extension. Do not import this file in the preferences window because Shell is not available there.
+// ExtmediaReproductor shell-specific utilities. Do not import this file in the preferences window because Shell is not available there.
 
 import GLib from "gi://GLib";
 import Soup from "gi://Soup";
