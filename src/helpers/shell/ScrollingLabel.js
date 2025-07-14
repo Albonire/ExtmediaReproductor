@@ -16,7 +16,7 @@ const SCROLL_ANIMATION_SPEED = 0.04;
  */
 
 /** @extends St.ScrollView */
-class ScrollingLabel extends St.ScrollView {
+class ExtmediaScrollingLabel extends St.ScrollView {
     /**
      * @public
      * @type {St.Label}
@@ -210,7 +210,7 @@ const GScrollingLabel = GObject.registerClass(
     {
         GTypeName: "ScrollingLabel",
     },
-    ScrollingLabel,
+    ExtmediaScrollingLabel,
 );
 
 export default GScrollingLabel;
