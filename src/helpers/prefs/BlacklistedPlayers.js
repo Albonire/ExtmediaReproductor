@@ -6,7 +6,7 @@ import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensio
 import { AppChooser } from "../../prefs.js";
 import { handleError } from "../../utils/common.js";
 
-class BlacklistedPlayers extends Adw.PreferencesGroup {
+class ExtmediaBlacklistedPlayers extends Adw.PreferencesGroup {
     /**
      * @public
      * @type {string[]}
@@ -102,4 +102,4 @@ class BlacklistedPlayers extends Adw.PreferencesGroup {
     }
 }
 
-export default BlacklistedPlayers;
+export default ExtmediaBlacklistedPlayers;
