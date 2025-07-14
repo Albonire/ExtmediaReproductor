@@ -1,8 +1,8 @@
 {
-  "uuid": "mediacontrols@cliffniff.github.com",
-  "name": "Media Controls",
-  "description": "Show controls and information of the currently playing media in the panel.",
-  "url": "https://github.com/cliffniff/media-controls",
+  "uuid": "extmediareproductor@albonire.github.com",
+  "name": "ExtmediaReproductor",
+  "description": "Muestra controles e información del medio actualmente en reproducción en el panel.",
+  "url": "https://github.com/Albonire/ExtmediaReproductor",
   "settings-schema": "org.gnome.shell.extensions.mediacontrols",
   "gettext-domain": "mediacontrols@cliffniff.github.com",
   "version-name": "2.2.0",
