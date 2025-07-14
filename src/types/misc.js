@@ -1,6 +1,7 @@
 /**
  * @typedef {X[keyof X]} Enum
  * @template X
+ * @description ExtmediaReproductor utility types
  */
 
 /**
