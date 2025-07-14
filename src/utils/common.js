@@ -26,7 +26,7 @@ export const enumKeyByValue = (enumObject, value) => {
  */
 export const debugLog = (...args) => {
     if (DEBUG) {
-        console.log("[Media Controls]", ...args);
+        console.log("[ExtmediaReproductor]", ...args);
     }
 };
 
@@ -35,7 +35,7 @@ export const debugLog = (...args) => {
  * @returns {void}
  */
 export const errorLog = (...args) => {
-    console.error("[Media Controls]", "Error:", ...args);
+    console.error("[ExtmediaReproductor]", "Error:", ...args);
 };
 
 /**
