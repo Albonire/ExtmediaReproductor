@@ -30,7 +30,7 @@ import {
 
 Gio._promisify(Gio.File.prototype, "load_contents_async", "load_contents_finish");
 
-export default class MediaControls extends Extension {
+export default class ExtmediaReproductor extends Extension {
     /**
      * @public
      * @type {number}
