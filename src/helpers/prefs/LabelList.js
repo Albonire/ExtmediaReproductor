@@ -9,7 +9,7 @@ import { LabelTypes } from "../../types/enums/common.js";
 
 /** @extends Adw.PreferencesGroup */
 
-class LabelList extends Adw.PreferencesGroup {
+class ExtmediaLabelList extends Adw.PreferencesGroup {
     /**
      * @public
      * @type {string[]}
@@ -224,4 +224,4 @@ class LabelList extends Adw.PreferencesGroup {
     }
 }
 
-export default LabelList;
+export default ExtmediaLabelList;
