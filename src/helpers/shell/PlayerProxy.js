@@ -16,7 +16,7 @@ import GLib from "gi://GLib";
  * >} PlayerProxyChangeListeners
  */
 
-export default class PlayerProxy {
+export default class ExtmediaPlayerProxy {
     /**
      * @private
      * @type {boolean}
