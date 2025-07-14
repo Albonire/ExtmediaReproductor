@@ -27,7 +27,7 @@ Gio._promisify(Gio.File.prototype, "query_info_async", "query_info_finish");
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.FileEnumerator.prototype, "next_files_async", "next_files_finish");
 
-export default class MediaControlsPreferences extends ExtensionPreferences {
+export default class ExtmediaReproductorPreferences extends ExtensionPreferences {
     /**
      * @private
      * @type {Adw.PreferencesWindow}
