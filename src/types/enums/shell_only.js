@@ -1,4 +1,5 @@
 /** @import { Enum } from '../misc.js' */
+// ExtmediaReproductor shell-specific enumerations
 
 import Clutter from "gi://Clutter";
 
