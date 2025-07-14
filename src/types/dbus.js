@@ -64,7 +64,7 @@
  */
 
 /**
- * @typedef {Object} PlayerProxyDBusProperties
+ * @typedef {Object} ExtmediaPlayerProxyDBusProperties
  * @property {PlaybackStatus} PlaybackStatus
  * @property {LoopStatus} LoopStatus
  * @property {number} Rate
@@ -92,7 +92,7 @@
  */
 
 /**
- * @typedef {PlayerProxyDBusProperties & {
+ * @typedef {ExtmediaPlayerProxyDBusProperties & {
  *     IsInvalid: boolean,
  *     IsPinned: boolean,
  * }} PlayerProxyProperties
@@ -102,7 +102,7 @@
  * @typedef {Object} PropertiesSignalArgs
  * @property {[
  *     interfaceName: string,
- *     changedProperties: { [k in KeysOf<PlayerProxyDBusProperties>]: GLib.Variant },
+ *     changedProperties: { [k in KeysOf<ExtmediaPlayerProxyDBusProperties>]: GLib.Variant },
  *     invalidatedProperties: string[],
  * ]} PropertiesChanged
  */
