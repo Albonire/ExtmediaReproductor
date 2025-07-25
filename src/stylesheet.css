@@ -99,3 +99,22 @@
 .popup-menu-control-icon:hover {
     background-color: rgba(160, 160, 160, 0.25);
 }
+
+/* Estilos para el slider de la extensión */
+.popup-menu-box .slider-bar {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    height: 10px;
+}
+
+.popup-menu-box .slider-handle {
+    background-color: #FFFFFF;
+    border: 2px solid #808080;
+    border-radius: 99px;
+    icon-size: 16px;
+    -st-icon-style: regular;
+}
+
+.popup-menu-box .slider:hover .slider-handle {
+    background-color: #F0F0F0;
+}

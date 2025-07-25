@@ -55,9 +55,13 @@ class ExtmediaMenuSlider extends St.BoxLayout {
      *
      */
     constructor() {
-        super({ orientation: Clutter.Orientation.VERTICAL });
+        super({
+            orientation: Clutter.Orientation.VERTICAL,
+            style_class: "slider-box",
+        });
         this.rate = 1.0;
         this.slider = new Slider.Slider(0);
+        this.slider.style_class = "slider";
         this.textBox = new St.BoxLayout();
         this.elapsedLabel = new St.Label({
             text: "00:00",
