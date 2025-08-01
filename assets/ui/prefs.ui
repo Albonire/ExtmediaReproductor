@@ -53,6 +53,18 @@
             <property name="subtitle" translatable="yes">Show the track slider in popup</property>
           </object>
         </child>
+        <child>
+          <object class="AdwSwitchRow" id="sr-general-show-loop">
+            <property name="title" translatable="yes">Show the loop button</property>
+            <property name="subtitle" translatable="yes">Show the loop status button in popup</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwSwitchRow" id="sr-general-show-shuffle">
+            <property name="title" translatable="yes">Show the shuffle button</property>
+            <property name="subtitle" translatable="yes">Show the shuffle toggle button in popup</property>
+          </object>
+        </child>
       </object>
     </child>
     <child>
