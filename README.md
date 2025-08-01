@@ -40,7 +40,7 @@ ExtmediaReproductor es una extensión para GNOME Shell que muestra controles e i
 
 ## Contribuir
 
-¡Cualquier tipo de contribución es bienvenida! Si tienes sugerencias para nuevas funciones, abre un issue.
+Cualquier tipo de contribución es bienvenida! Si tienes sugerencias para nuevas funciones, abre un issue.
 
 Si quieres traducir la extensión, descarga el archivo .po correspondiente y envía un pull request con la traducción.
 
