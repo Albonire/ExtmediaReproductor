@@ -275,7 +275,10 @@ class ExtmediaPanelButton extends PanelMenu.Button {
                 this.menuSlider = null;
             }
         }
-        if (flags & WidgetFlags.MENU_CONTROLS) {
+        if (
+            flags &
+            (WidgetFlags.MENU_CONTROLS | WidgetFlags.MENU_CONTROLS_LOOP | WidgetFlags.MENU_CONTROLS_SHUFFLE)
+        ) {
             this.addMenuControls(flags);
         }
         if (this.buttonBox.get_parent() == null) {
@@ -567,7 +570,9 @@ class ExtmediaPanelButton extends PanelMenu.Button {
         if (this.menuControls == null) {
             this.menuControls = new St.BoxLayout();
         }
-        if (flags & WidgetFlags.MENU_CONTROLS_LOOP) {
+
+        if (this.extension.showLoopButton && (flags & WidgetFlags.MENU_CONTROLS_LOOP)) {
+            const isLoopActive = this.playerProxy.loopStatus !== LoopStatus.NONE;
             this.addMenuControlIcon(
                 this.playerProxy.loopStatus === LoopStatus.NONE
                     ? ControlIconOptions.LOOP_NONE
@@ -576,8 +581,10 @@ class ExtmediaPanelButton extends PanelMenu.Button {
                       : ControlIconOptions.LOOP_PLAYLIST,
                 this.playerProxy.loopStatus != null,
                 this.playerProxy.toggleLoop.bind(this.playerProxy),
+                isLoopActive,
             );
         }
+
         if (flags & WidgetFlags.MENU_CONTROLS_PREV) {
             this.addMenuControlIcon(
                 ControlIconOptions.PREVIOUS,
@@ -585,6 +592,7 @@ class ExtmediaPanelButton extends PanelMenu.Button {
                 this.playerProxy.previous.bind(this.playerProxy),
             );
         }
+
         if (flags & WidgetFlags.MENU_CONTROLS_PLAYPAUSE) {
             if (this.playerProxy.playbackStatus !== PlaybackStatus.PLAYING) {
                 this.addMenuControlIcon(
@@ -600,6 +608,7 @@ class ExtmediaPanelButton extends PanelMenu.Button {
                 );
             }
         }
+
         if (flags & WidgetFlags.MENU_CONTROLS_NEXT) {
             this.addMenuControlIcon(
                 ControlIconOptions.NEXT,
@@ -607,13 +616,17 @@ class ExtmediaPanelButton extends PanelMenu.Button {
                 this.playerProxy.next.bind(this.playerProxy),
             );
         }
-        if (flags & WidgetFlags.MENU_CONTROLS_SHUFFLE) {
+
+        if (this.extension.showShuffleButton && (flags & WidgetFlags.MENU_CONTROLS_SHUFFLE)) {
+            const isShuffleActive = this.playerProxy.shuffle === true;
             this.addMenuControlIcon(
-                this.playerProxy.shuffle ? ControlIconOptions.SHUFFLE_OFF : ControlIconOptions.SHUFFLE_ON,
+                this.playerProxy.shuffle ? ControlIconOptions.SHUFFLE_ON : ControlIconOptions.SHUFFLE_OFF,
                 this.playerProxy.shuffle != null,
                 this.playerProxy.toggleShuffle.bind(this.playerProxy),
+                isShuffleActive,
             );
         }
+
         if (this.menuControls.get_parent() == null) {
             this.menuBox.add_child(this.menuControls);
         }
@@ -627,11 +640,12 @@ class ExtmediaPanelButton extends PanelMenu.Button {
      * @param {() => void} onClick
      * @returns {void}
      */
-    addMenuControlIcon(options, reactive, onClick) {
+    addMenuControlIcon(options, reactive, onClick, isActive = false) {
+        const styleClass = `popup-menu-icon popup-menu-control-icon${isActive ? " active" : ""}`;
         const icon = new St.Icon({
             name: options.name,
             iconName: options.iconName,
-            styleClass: "popup-menu-icon popup-menu-control-icon",
+            styleClass,
             trackHover: reactive,
             opacity: reactive ? 255 : 160,
             reactive,
