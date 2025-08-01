@@ -515,7 +515,11 @@ export default class ExtmediaPlayerProxy {
         const loopStatuses = Object.values(LoopStatus);
         const currentIndex = loopStatuses.findIndex((loop) => loop === this.loopStatus);
         const nextIndex = (currentIndex + 1 + loopStatuses.length) % loopStatuses.length;
-        this.loopStatus = loopStatuses[nextIndex];
+        const nextStatus = loopStatuses[nextIndex];
+
+        this.propertiesProxy
+            .SetAsync(MPRIS_PLAYER_IFACE_NAME, "LoopStatus", new GLib.Variant("s", nextStatus))
+            .catch(handleError);
     }
 
     /**
@@ -523,7 +527,10 @@ export default class ExtmediaPlayerProxy {
      * @returns {void}
      */
     toggleShuffle() {
-        this.shuffle = !this.shuffle;
+        const newShuffleState = !this.shuffle;
+        this.propertiesProxy
+            .SetAsync(MPRIS_PLAYER_IFACE_NAME, "Shuffle", new GLib.Variant("b", newShuffleState))
+            .catch(handleError);
     }
 
     /**
