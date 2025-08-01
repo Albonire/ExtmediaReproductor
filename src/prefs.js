@@ -264,6 +264,8 @@ export default class ExtmediaReproductorPreferences extends ExtensionPreferences
         this.bindSetting("scroll-labels", "sr-general-scroll-labels", "active");
         this.bindSetting("hide-media-notification", "sr-general-hide-media-notification", "active");
         this.bindSetting("show-track-slider", "sr-general-show-track-slider", "active");
+        this.bindSetting("show-loop-button", "sr-general-show-loop", "active");
+        this.bindSetting("show-shuffle-button", "sr-general-show-shuffle", "active");
         this.bindSetting("show-label", "sr-panel-show-label", "active");
         this.bindSetting("show-control-icons", "sr-panel-show-controls", "active");
         this.bindSetting("show-control-icons-play", "sr-panel-show-play", "active");
