@@ -118,3 +118,7 @@
 .popup-menu-box .slider:hover .slider-handle {
     background-color: #F0F0F0;
 }
+
+.popup-menu-control-icon.active {
+    background-color: rgba(53, 132, 228, 0.3);
+}
