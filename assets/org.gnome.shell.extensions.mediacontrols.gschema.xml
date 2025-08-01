@@ -37,6 +37,12 @@
     <key name="show-track-slider" type="b">
       <default>true</default>
     </key>
+    <key name="show-loop-button" type="b">
+      <default>true</default>
+    </key>
+    <key name="show-shuffle-button" type="b">
+      <default>true</default>
+    </key>
     <key name="show-label" type="b">
       <default>true</default>
     </key>
