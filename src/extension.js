@@ -65,6 +65,18 @@ export default class ExtmediaReproductor extends Extension {
      * @public
      * @type {boolean}
      */
+    showLoopButton;
+
+    /**
+     * @public
+     * @type {boolean}
+     */
+    showShuffleButton;
+
+    /**
+     * @public
+     * @type {boolean}
+     */
     showLabel;
 
     /**
@@ -312,6 +324,8 @@ export default class ExtmediaReproductor extends Extension {
         this.scrollLabels = this.settings.get_boolean("scroll-labels");
         this.hideMediaNotification = this.settings.get_boolean("hide-media-notification");
         this.showTrackSlider = this.settings.get_boolean("show-track-slider");
+        this.showLoopButton = this.settings.get_boolean("show-loop-button");
+        this.showShuffleButton = this.settings.get_boolean("show-shuffle-button");
         this.showLabel = this.settings.get_boolean("show-label");
         this.showPlayerIcon = this.settings.get_boolean("show-player-icon");
         this.showControlIcons = this.settings.get_boolean("show-control-icons");
@@ -352,6 +366,14 @@ export default class ExtmediaReproductor extends Extension {
         this.settings.connect("changed::show-track-slider", () => {
             this.showTrackSlider = this.settings.get_boolean("show-track-slider");
             this.panelBtn?.updateWidgets(WidgetFlags.MENU_SLIDER);
+        });
+        this.settings.connect("changed::show-loop-button", () => {
+            this.showLoopButton = this.settings.get_boolean("show-loop-button");
+            this.panelBtn?.updateWidgets(WidgetFlags.MENU_CONTROLS_LOOP);
+        });
+        this.settings.connect("changed::show-shuffle-button", () => {
+            this.showShuffleButton = this.settings.get_boolean("show-shuffle-button");
+            this.panelBtn?.updateWidgets(WidgetFlags.MENU_CONTROLS_SHUFFLE);
         });
         this.settings.connect("changed::show-label", () => {
             this.showLabel = this.settings.get_boolean("show-label");
@@ -707,6 +729,9 @@ export default class ExtmediaReproductor extends Extension {
         this.labelWidth = null;
         this.hideMediaNotification = null;
         this.scrollLabels = null;
+        this.showTrackSlider = null;
+        this.showLoopButton = null;
+        this.showShuffleButton = null;
         this.showLabel = null;
         this.showPlayerIcon = null;
         this.showControlIcons = null;
