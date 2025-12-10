@@ -1,9 +1,13 @@
 {
   "type": "module",
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "build": "bash mediacontrols.sh build",
+    "build:release": "bash mediacontrols.sh release"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@girs/adw-1": "1.8.0-4.0.0-beta.23",
     "@girs/clutter-13": "13.0.0-4.0.0-beta.23",
     "@girs/cogl-13": "13.0.0-4.0.0-beta.23",
@@ -22,6 +26,10 @@
     "@girs/shell-13": "13.0.0-4.0.0-beta.23",
     "@girs/soup-3.0": "3.6.4-4.0.0-beta.23",
     "@girs/st-13": "13.0.0-4.0.0-beta.23",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.5.0",
     "prettier": "^3.5.3"
   }
 }

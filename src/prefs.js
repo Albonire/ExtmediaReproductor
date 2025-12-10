@@ -10,8 +10,9 @@ import BlacklistedPlayersOrig from "./helpers/prefs/BlacklistedPlayers.js";
 import ElementListOrig from "./helpers/prefs/ElementList.js";
 import LabelListOrig from "./helpers/prefs/LabelList.js";
 import AppChooserorig from "./helpers/prefs/AppChooser.js";
-import { isValidBinding, isValidAccelerator } from "./utils/prefs_only.js";
+import { isValidBinding, isValidAccelerator, sendToast } from "./utils/prefs_only.js";
 import { handleError } from "./utils/common.js";
+import { clearCache, getCacheSize } from "./utils/cache.js";
 
 /** @type {typeof BlacklistedPlayersOrig} */
 export let BlacklistedPlayers;
@@ -227,6 +228,16 @@ export default class ExtmediaReproductorPreferences extends ExtensionPreferences
         });
         const cacheClearRow = /** @type {Adw.ActionRow} */ (this.builder.get_object("row-other-cache-clear"));
         const cacheClearBtn = /** @type {Gtk.Button} */ (this.builder.get_object("btn-other-cache-clear"));
+
+        const updateCacheSize = () => {
+            getCacheSize(this.uuid)
+                .then((size) => {
+                    const sizeReadable = GLib.format_size(size);
+                    cacheClearRow.subtitle = _("Cache size: %s").format(sizeReadable);
+                })
+                .catch(handleError);
+        };
+
         cacheClearBtn.connect("clicked", () => {
             const dialog = Adw.MessageDialog.new(this.window, "", _("Are you sure you want to clear the cache?"));
             dialog.add_response("cancel", _("Cancel"));
@@ -234,16 +245,20 @@ export default class ExtmediaReproductorPreferences extends ExtensionPreferences
             dialog.set_response_appearance("clear", Adw.ResponseAppearance.DESTRUCTIVE);
             dialog.connect("response", (self, response) => {
                 if (response === "cancel") return;
-                this.clearCache().then(() => {
-                    cacheClearRow.subtitle = _("Cache size: %s").format(GLib.format_size(0));
-                });
+                clearCache(this.uuid)
+                    .then(() => {
+                        sendToast(this.window, _("Cache cleared successfully!"));
+                        updateCacheSize();
+                    })
+                    .catch(() => {
+                        sendToast(this.window, _("Failed to clear cache!"));
+                    });
             });
             dialog.present();
         });
-        this.getCacheSize().then((size) => {
-            const sizeReadable = GLib.format_size(size);
-            cacheClearRow.subtitle = _("Cache size: %s").format(sizeReadable);
-        });
+
+        updateCacheSize();
+
         const blacklistedGrp = /** @type {InstanceType<typeof BlacklistedPlayers>} */ (
             this.builder.get_object("gp-other-blacklist")
         );
@@ -319,75 +334,5 @@ export default class ExtmediaReproductorPreferences extends ExtensionPreferences
             const bindingFlags = Gio.SettingsBindFlags.DEFAULT | Gio.SettingsBindFlags.NO_SENSITIVITY;
             this.settings.bind(key, widget, property, bindingFlags);
         }
-    }
-
-    /**
-     * @private
-     * @param {string} title
-     * @returns {void}
-     */
-    sendToast(title) {
-        const toast = new Adw.Toast({ title, timeout: 3 });
-        this.window.add_toast(toast);
-    }
-
-    /**
-     * @private
-     * @returns {Promise<void>}
-     */
-    async clearCache() {
-        const cacheDir = GLib.build_pathv("/", [GLib.get_user_cache_dir(), "mediacontrols@cliffniff.github.com"]);
-        if (GLib.file_test(cacheDir, GLib.FileTest.EXISTS)) {
-            const folder = Gio.File.new_for_path(cacheDir);
-            const success = await folder.trash_async(null, null).catch(handleError);
-            if (success) {
-                this.sendToast(_("Cache cleared successfully!"));
-            } else {
-                this.sendToast(_("Failed to clear cache!"));
-            }
-        }
-    }
-
-    /**
-     * @private
-     * @returns {Promise<number>}
-     */
-    async getCacheSize() {
-        const cacheDir = GLib.build_pathv("/", [GLib.get_user_cache_dir(), "mediacontrols@cliffniff.github.com"]);
-        if (GLib.file_test(cacheDir, GLib.FileTest.EXISTS)) {
-            const folder = Gio.File.new_for_path(cacheDir);
-            const enumerator = await folder
-                .enumerate_children_async("standard::*", Gio.FileQueryInfoFlags.NONE, 0, null)
-                .catch(handleError);
-            if (enumerator == null) {
-                return 0;
-            }
-            let size = 0;
-            let retries = 0;
-            while (true) {
-                const fileInfos = await enumerator.next_files_async(10, null, null).catch(handleError);
-                if (fileInfos == null) {
-                    if (retries < 3) {
-                        retries++;
-                        continue;
-                    } else {
-                        break;
-                    }
-                }
-                if (fileInfos.length === 0) {
-                    break;
-                }
-                for (const fileInfo of fileInfos) {
-                    const file = enumerator.get_child(fileInfo);
-                    const info = await file
-                        .query_info_async("standard::size", Gio.FileQueryInfoFlags.NONE, 0, null)
-                        .catch(handleError);
-                    const fileSize = info?.get_size() ?? 0;
-                    size += fileSize;
-                }
-            }
-            return size;
-        }
-        return 0;
     }
 }

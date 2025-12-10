@@ -275,10 +275,7 @@ class ExtmediaPanelButton extends PanelMenu.Button {
                 this.menuSlider = null;
             }
         }
-        if (
-            flags &
-            (WidgetFlags.MENU_CONTROLS | WidgetFlags.MENU_CONTROLS_LOOP | WidgetFlags.MENU_CONTROLS_SHUFFLE)
-        ) {
+        if (flags & (WidgetFlags.MENU_CONTROLS | WidgetFlags.MENU_CONTROLS_LOOP | WidgetFlags.MENU_CONTROLS_SHUFFLE)) {
             this.addMenuControls(flags);
         }
         if (this.buttonBox.get_parent() == null) {
@@ -571,7 +568,7 @@ class ExtmediaPanelButton extends PanelMenu.Button {
             this.menuControls = new St.BoxLayout();
         }
 
-        if (this.extension.showLoopButton && (flags & WidgetFlags.MENU_CONTROLS_LOOP)) {
+        if (this.extension.showLoopButton && flags & WidgetFlags.MENU_CONTROLS_LOOP) {
             const isLoopActive = this.playerProxy.loopStatus !== LoopStatus.NONE;
             this.addMenuControlIcon(
                 this.playerProxy.loopStatus === LoopStatus.NONE
@@ -617,7 +614,7 @@ class ExtmediaPanelButton extends PanelMenu.Button {
             );
         }
 
-        if (this.extension.showShuffleButton && (flags & WidgetFlags.MENU_CONTROLS_SHUFFLE)) {
+        if (this.extension.showShuffleButton && flags & WidgetFlags.MENU_CONTROLS_SHUFFLE) {
             const isShuffleActive = this.playerProxy.shuffle === true;
             this.addMenuControlIcon(
                 this.playerProxy.shuffle ? ControlIconOptions.SHUFFLE_ON : ControlIconOptions.SHUFFLE_OFF,
