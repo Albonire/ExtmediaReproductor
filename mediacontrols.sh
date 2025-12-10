@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
 nested() {
@@ -12,7 +12,11 @@ build() {
   mkdir -p dist/temp
   mkdir -p dist/builds
   rm -rf dist/temp/*
-  cp -r $(find src -mindepth 1 -maxdepth 1 -not -name "assets") dist/temp/.
+
+  SRCS=$(find src -mindepth 1 -maxdepth 1 -not -name "assets")
+  if [ -n "$SRCS" ]; then
+    cp -r $SRCS dist/temp/.
+  fi
 
   glib-compile-resources assets/org.gnome.shell.extensions.mediacontrols.gresource.xml --target=dist/temp/org.gnome.shell.extensions.mediacontrols.gresource --sourcedir=assets
 
@@ -59,7 +63,7 @@ reload() {
 translations() {
   echo "Updating translations..."
 
-  touch assets/locale/mediacontrols@cliffniff.github.com.pot
+  touch assets/locale/extmediareproductor@albonire.github.com.pot
 
   find . -type f -iname "*.ui" -o -iname "*.js" -not -path "./node_modules/*" | xargs xgettext --from-code=UTF-8 \
     --add-comments \
@@ -67,11 +71,11 @@ translations() {
     --keyword=_ \
     --keyword=C_:1c,2 \
     --language=Javascript \
-    --output=assets/locale/mediacontrols@cliffniff.github.com.pot
+    --output=assets/locale/extmediareproductor@albonire.github.com.pot
 
   for pofile in assets/locale/*.po; do
     echo "Updating: $pofile"
-    msgmerge -U "$pofile" "assets/locale/mediacontrols@cliffniff.github.com.pot"
+    msgmerge -U "$pofile" "assets/locale/extmediareproductor@albonire.github.com.pot"
   done
 
   rm assets/locale/*.po~ 2>/dev/null
@@ -80,27 +84,27 @@ translations() {
 
 install() {
   echo "Installing..."
-  gnome-extensions install --force ./dist/builds/mediacontrols@cliffniff.github.com.shell-extension.zip
+  gnome-extensions install --force ./dist/builds/extmediareproductor@albonire.github.com.shell-extension.zip
 }
 
 uninstall() {
   echo "Uninstalling..."
-  gnome-extensions uninstall mediacontrols@cliffniff.github.com
+  gnome-extensions uninstall extmediareproductor@albonire.github.com
 }
 
 enable() {
   echo "Enabling..."
-  gnome-extensions enable mediacontrols@cliffniff.github.com
+  gnome-extensions enable extmediareproductor@albonire.github.com
 }
 
 disable() {
   echo "Disabling..."
-  gnome-extensions disable mediacontrols@cliffniff.github.com
+  gnome-extensions disable extmediareproductor@albonire.github.com
 }
 
 prefs() {
   echo "Opening prefs..."
-  gnome-extensions prefs mediacontrols@cliffniff.github.com
+  gnome-extensions prefs extmediareproductor@albonire.github.com
 }
 
 watch() {

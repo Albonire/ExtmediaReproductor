@@ -3,7 +3,8 @@
 /** @import { KeysOf } from '../../types/misc.js' */
 import { MPRIS_PLAYER_IFACE_NAME, MPRIS_OBJECT_PATH, LoopStatus } from "../../types/enums/common.js";
 import { errorLog, handleError } from "../../utils/common.js";
-import { createDbusProxy } from "../../utils/shell_only.js";
+import { createDbusProxy, getImage } from "../../utils/shell_only.js";
+import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 import GLib from "gi://GLib";
 
@@ -99,9 +100,31 @@ export default class ExtmediaPlayerProxy {
         this.onChanged("Metadata", this.validatePlayer.bind(this));
         this.onChanged("Identity", this.validatePlayer.bind(this));
         this.onChanged("DesktopEntry", this.validatePlayer.bind(this));
+        this.onChanged("Metadata", this.updateArt.bind(this));
         this.validatePlayer();
         this.pollTillInitialized();
         return true;
+    }
+
+    /**
+     * @private
+     * @returns {Promise<void>}
+     */
+    async updateArt() {
+        if (this.artUrl === this.metadata["mpris:artUrl"]) {
+            return;
+        }
+
+        this.artUrl = this.metadata["mpris:artUrl"];
+
+        if (this.artUrl) {
+            const extension = Extension.lookupByURL(import.meta.url);
+            this.art = await getImage(this.artUrl, extension.uuid).catch(handleError);
+        } else {
+            this.art = null;
+        }
+
+        this.callOnChangedListeners("Art", this.art);
     }
 
     /**

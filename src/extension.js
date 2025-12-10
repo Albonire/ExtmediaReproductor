@@ -7,7 +7,6 @@ import GLib from "gi://GLib";
 import Meta from "gi://Meta";
 import Shell from "gi://Shell";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
-import * as Mpris from "resource:///org/gnome/shell/ui/mpris.js";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 import PanelButton from "./helpers/shell/PanelButton.js";
@@ -496,15 +495,11 @@ export default class ExtmediaReproductor extends Extension {
         const mprisInterface = mprisNodeInfo.lookup_interface(MPRIS_IFACE_NAME);
         const mprisPlayerInterface = mprisNodeInfo.lookup_interface(MPRIS_PLAYER_IFACE_NAME);
         const propertiesInterface = mprisNodeInfo.lookup_interface(DBUS_PROPERTIES_IFACE_NAME);
-        // @ts-expect-error
-        const mprisInterfaceString = new GLib.String("");
-        mprisInterface.generate_xml(4, mprisInterfaceString);
-        // @ts-expect-error
-        const mprisPlayerInterfaceString = new GLib.String("");
-        mprisPlayerInterface.generate_xml(4, mprisPlayerInterfaceString);
-        // @ts-expect-error
-        const propertiesInterfaceString = new GLib.String("");
-        propertiesInterface.generate_xml(4, propertiesInterfaceString);
+
+        mprisInterface.generate_xml(4, new GLib.String(""));
+        mprisPlayerInterface.generate_xml(4, new GLib.String(""));
+        propertiesInterface.generate_xml(4, new GLib.String(""));
+
         this.mprisIfaceInfo = mprisInterface;
         this.mprisPlayerIfaceInfo = mprisPlayerInterface;
         this.propertiesIfaceInfo = propertiesInterface;
@@ -672,26 +667,16 @@ export default class ExtmediaReproductor extends Extension {
      * @returns {void}
      */
     updateMediaNotificationVisiblity(shouldReset = false) {
-        if (this.mediaSectionAddFunc && (shouldReset || this.hideMediaNotification === false)) {
-            Mpris.MprisSource.prototype._addPlayer = this.mediaSectionAddFunc;
-            this.mediaSectionAddFunc = null;
-            // @ts-expect-error
-            Main.panel.statusArea.dateMenu._messageList._messageView._mediaSource._onProxyReady();
+        const mpris = Main.panel.statusArea.dateMenu._messageList._mediaSection;
+
+        if (this.hideMediaNotification) {
+            mpris.hide();
         } else {
-            this.mediaSectionAddFunc = Mpris.MprisSource.prototype._addPlayer;
-            Mpris.MprisSource.prototype._addPlayer = function () {};
-            // @ts-expect-error
-            if (Main.panel.statusArea.dateMenu._messageList._messageView._mediaSource._players != null) {
-                // @ts-expect-error
-                for (const player of Main.panel.statusArea.dateMenu._messageList._messageView._mediaSource._players.values()) {
-                    // @ts-expect-error
-                    Main.panel.statusArea.dateMenu._messageList._messageView._mediaSource._onNameOwnerChanged(
-                        null,
-                        null,
-                        [player._busName, player._busName, ""],
-                    );
-                }
-            }
+            mpris.show();
+        }
+
+        if (shouldReset) {
+            mpris.show();
         }
     }
 

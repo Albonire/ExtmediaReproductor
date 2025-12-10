@@ -1,9 +1,8 @@
-// ExtmediaReproductor shell-specific utilities. Do not import this file in the preferences window because Shell is not available there.
-
+import Gio from "gi://Gio";
+import Shell from "gi://Shell";
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import GLib from "gi://GLib";
 import Soup from "gi://Soup";
-import Shell from "gi://Shell";
-import Gio from "gi://Gio";
 import { errorLog, handleError } from "./common.js";
 
 Gio._promisify(Gio.DBusProxy, "new", "new_finish");
@@ -11,64 +10,69 @@ Gio._promisify(Gio.File.prototype, "replace_contents_bytes_async", "replace_cont
 Gio._promisify(Gio.File.prototype, "read_async", "read_finish");
 Gio._promisify(Soup.Session.prototype, "send_and_read_async", "send_and_read_finish");
 
-// TODO: sort this out
-/**
- * @param {string} id
- * @param {string} entry
- * @returns {Gio.AppInfo | null}
- */
-export const getAppInfoByIdAndEntry = (id, entry) => {
-    const apps = Gio.AppInfo.get_all();
-    for (const app of apps) {
-        if (
-            app.get_display_name() === entry ||
-            app.get_id() === id ||
-            app.get_name() === entry ||
-            app.get_name() === id
-        ) {
-            return app;
-        }
-    }
-    return null;
-};
-
 /**
  * @param {string} id
  * @param {string} entry
  * @returns {Shell.App | null}
  */
-export const getAppByIdAndEntry = (id, entry) => {
-    const appSystem = Shell.AppSystem.get_default();
-    const runningApps = appSystem.get_running();
-    const idResults = Shell.AppSystem.search(id ?? "");
-    const entryResults = Shell.AppSystem.search(entry ?? "");
-    if (entryResults?.length > 0) {
-        const app = runningApps.find((app) => entryResults[0].includes(app.get_id()));
-        if (app != null) {
-            return app;
-        }
-    }
-    if (idResults?.length > 0) {
-        const app = runningApps.find((app) => idResults[0].includes(app.get_id()));
-        if (app != null) {
-            return app;
-        }
-    }
+export const getAppInfoByIdAndEntry = (id, entry) => {
+    const appSys = Shell.AppSystem.get_default();
+
+    let app = appSys.lookup_app(id);
+    if (app) return app;
+
+    app = appSys.lookup_app(entry);
+    if (app) return app;
+
+    app = Gio.DesktopAppInfo.new(id);
+    if (app) return Shell.App.new(app);
+
+    app = Gio.DesktopAppInfo.new(entry);
+    if (app) return Shell.App.new(app);
+
     return null;
 };
 
 /**
+ * @param {Gio.DBusInterfaceInfo} ifaceInfo
+ * @param {string} busName
+ * @param {string} path
+ * @returns {Promise<Gio.DBusProxy | null>}
+ */
+export const createDbusProxy = (ifaceInfo, busName, path) => {
+    return new Promise((resolve) => {
+        Gio.DBusProxy.new(
+            Gio.DBus.session,
+            Gio.DBusProxyFlags.NONE,
+            ifaceInfo,
+            busName,
+            path,
+            busName,
+            null,
+            (proxy) => {
+                if (proxy) {
+                    resolve(proxy);
+                } else {
+                    resolve(null);
+                }
+            },
+        );
+    });
+};
+
+/**
  * @param {string} url
+ * @param {string} uuid
  * @returns {Promise<Gio.InputStream>}
  */
-export const getImage = async (url) => {
+export const getImage = async (url, uuid) => {
     if (url == null || url == "") {
         return null;
     }
     const encoder = new TextEncoder();
     const urlBytes = encoder.encode(url);
     const encodedUrl = GLib.base64_encode(urlBytes);
-    const path = GLib.build_filenamev([GLib.get_user_cache_dir(), "mediacontrols@cliffniff.github.com", encodedUrl]);
+    const path = GLib.build_filenamev([GLib.get_user_cache_dir(), uuid, encodedUrl]);
     const exitCode = GLib.mkdir_with_parents(GLib.path_get_dirname(path), 493);
     if (exitCode === -1) {
         errorLog(`Failed to create cache directory: ${path}`);
@@ -107,7 +111,6 @@ export const getImage = async (url) => {
                 errorLog(`Failed to load image: ${url}`);
                 return null;
             }
-            // @ts-expect-error Types are wrong
             const resultPromise = file.replace_contents_bytes_async(bytes, null, false, Gio.FileCreateFlags.NONE, null);
             const result = await resultPromise.catch(handleError);
             if (result?.[0] === false) {
@@ -128,22 +131,10 @@ export const getImage = async (url) => {
 };
 
 /**
- * @template T
- * @param {Gio.DBusInterfaceInfo} ifaceInfo
- * @param {string} name
- * @param {string} object
- * @returns {Promise<T>}
+ * @param {unknown} error
+ * @returns {void}
  */
-export const createDbusProxy = async (ifaceInfo, name, object) => {
-    // @ts-expect-error Types have not been promisified yet
-    const proxy = Gio.DBusProxy.new(
-        Gio.DBus.session,
-        Gio.DBusProxyFlags.NONE,
-        ifaceInfo,
-        name,
-        object,
-        ifaceInfo.name,
-        null,
-    );
-    return proxy;
+export const handleErrorWithDialog = (error) => {
+    const dialog = new Main.ErrorDialog(error);
+    dialog.open();
 };

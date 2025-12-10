@@ -1,6 +1,5 @@
 # ExtmediaReproductor
 
-
 ExtmediaReproductor es una extensión para GNOME Shell que muestra controles e información del medio actualmente en reproducción directamente en el panel.
 
 ## Características
@@ -18,11 +17,11 @@ ExtmediaReproductor es una extensión para GNOME Shell que muestra controles e i
 
 ### Instalación manual
 
-1. Descarga el archivo comprimido desde la sección de releases.
+1. Descarga el archivo comprimido `extmediareproductor@albonire.github.com.shell-extension.zip` desde la sección de releases.
 2. Abre una terminal en el directorio donde descargaste el archivo.
 3. Instala y habilita la extensión ejecutando:
    ```
-   gnome-extensions install extension.zip --force
+   gnome-extensions install extmediareproductor@albonire.github.com.shell-extension.zip --force
    ```
 
 ---
@@ -40,11 +39,7 @@ ExtmediaReproductor es una extensión para GNOME Shell que muestra controles e i
 
 ## Contribuir
 
-Cualquier tipo de contribución es bienvenida! Si tienes sugerencias para nuevas funciones, abre un issue.
-
-Si quieres traducir la extensión, descarga el archivo .po correspondiente y envía un pull request con la traducción.
-
-Si deseas contribuir con código, sigue el estilo del proyecto. Para actualizar los archivos de traducción ejecuta:
+Cualquier tipo de contribución es bienvenida. Por favor, lee la [guía de contribución](CONTRIBUTING.md) para empezar.
 
 ```
 ./mediacontrols.sh translations

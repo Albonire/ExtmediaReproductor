@@ -1,6 +1,6 @@
+import Adw from "gi://Adw";
 import Gdk from "gi://Gdk";
 import Gtk from "gi://Gtk";
-// ExtmediaReproductor preferences utilities
 
 export const FORBIDDEN_KEYVALS = [
     Gdk.KEY_Home,
@@ -18,15 +18,8 @@ export const FORBIDDEN_KEYVALS = [
 ];
 
 /**
- * @param {number} mask
- * @param {number} keyval
- * @returns {any}
- */
-export const isValidAccelerator = (mask, keyval) => {
-    return Gtk.accelerator_valid(keyval, mask) || (keyval === Gdk.KEY_Tab && mask !== 0);
-};
-
-/**
+ * Checks if a keybinding is valid.
+ *
  * @param {number} mask
  * @param {number} keycode
  * @param {number} keyval
@@ -62,4 +55,27 @@ export const isValidBinding = (mask, keycode, keyval) => {
         }
     }
     return true;
+};
+
+/**
+ * Checks if an accelerator is valid.
+ *
+ * @param {number} mask
+ * @param {number} keyval
+ * @returns {boolean}
+ */
+export const isValidAccelerator = (mask, keyval) => {
+    return Gtk.accelerator_valid(keyval, mask) || (keyval === Gdk.KEY_Tab && mask !== 0);
+};
+
+/**
+ * Sends a toast notification to the preferences window.
+ *
+ * @param {Adw.PreferencesWindow} window
+ * @param {string} title
+ * @returns {void}
+ */
+export const sendToast = (window, title) => {
+    const toast = new Adw.Toast({ title, timeout: 3 });
+    window.add_toast(toast);
 };

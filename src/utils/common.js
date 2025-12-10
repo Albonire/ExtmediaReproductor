@@ -44,6 +44,15 @@ export const errorLog = (...args) => {
  */
 export const handleError = (error) => {
     errorLog(error);
+
+    import("./shell_only.js")
+        .then((module) => {
+            module.handleErrorWithDialog(error);
+        })
+        .catch(() => {
+            // Ignore, running in prefs
+        });
+
     return null;
 };
 

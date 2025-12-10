@@ -6,7 +6,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: unnamed project\n"
+"Project-Id-Version: extmediareproductor@albonire.github.com\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-30 18:44+0200\n"
 "PO-Revision-Date: 2025-06-30 18:50+0200\n"
